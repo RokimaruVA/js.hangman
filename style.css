@@ -1,0 +1,217 @@
+@import url("https://fonts.googleapis.com/css2?family=Tiny5&display=swap");
+
+:root {
+  --sm-br: 0.5rem;
+  --md-br: 1rem;
+  --sm-gap: 0.5rem;
+  --md-gap: 1.5rem;
+  --typical-padding: 0.75rem 1rem;
+  --base-clr: hsl(0, 0%, 100%);
+  --base-clr-transparent: hsla(0, 0%, 100%, 0.4);
+  --fill-clr: hsl(227, 24%, 7%);
+  --fill-clr-transparent: hsla(233, 22%, 7%, 0.3);
+  --second-accent-clr: rgb(255, 0, 60);
+  --third-accent-clr: #a9ff20;
+  --base-font-size: 1.5rem;
+  --h1-font-size: 3rem;
+}
+body {
+  display: grid;
+  justify-items: center;
+  background-color: var(--fill-clr);
+  background-image: radial-gradient(
+    circle at 50% 200%,
+    var(--second-accent-clr) 0%,
+    var(--fill-clr) 100%
+  );
+  color: var(--base-clr);
+  font-size: var(--base-font-size);
+  font-family: "Tiny5", sans-serif;
+}
+a {
+  color: inherit;
+  opacity: 0.5;
+  transition: 0.2s ease-in-out;
+}
+a:hover,
+a:focus,
+a:focus-within {
+  opacity: 0.8;
+}
+
+.container {
+  display: grid;
+  align-content: start;
+  justify-items: center;
+  justify-content: center;
+  gap: var(--md-gap);
+  max-width: 26rem;
+  min-height: 100dvh;
+  padding: var(--md-gap) var(--sm-gap);
+  overflow: clip;
+}
+main {
+  display: grid;
+  align-items: start;
+  gap: var(--md-gap);
+}
+.hangman-block {
+  display: flex;
+  gap: var(--sm-gap);
+}
+.hangman {
+  display: block;
+min-height: 100%;
+  /* margin-top: 0.5rem;
+  margin-bottom: -1rem;
+  margin-left: -0.5rem; */
+}
+h1 {
+  text-align: center;
+  font-size: var(--h1-font-size);
+  line-height: 1;
+  font-weight: 500;
+  font-family: "Tiny5", sans-serif;
+}
+.rules {
+  text-align: center;
+  text-wrap: balance;
+}
+.input-group {
+  display: grid;
+  align-items: start;
+  grid-template-columns: auto 1fr 1fr;
+  gap: var(--sm-gap);
+}
+input {
+  width: 100%;
+  padding: var(--typical-padding);
+  font-size: var(--base-font-size);
+  background-color: var(--base-clr);
+  border-radius: var(--sm-br);
+  outline: solid 0.13rem transparent;
+  transition: 0.2s ease-in-out;
+  font-family: "Tiny5", sans-serif;
+  text-align: center;
+}
+input::placeholder {
+  display: block;
+  font-size: var(--base-font-size);
+  font-family: "Tiny5", sans-serif;
+  color: hsla(0, 0%, 0%, 0.4);
+  padding-right: 7rem;
+  /* background-color: green; */
+}
+input:hover {
+  outline: solid 0.13rem var(--base-clr-transparent);
+}
+input:focus-within {
+  outline: var(--base-clr) solid 0.13rem;
+}
+input:disabled {
+  background-color: var(--base-clr-transparent);
+  border: var(--fill-clr-transparent) solid 0.13rem;
+  outline: solid 0.13rem var(--base-clr-transparent);
+}
+
+button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sm-gap);
+  height: 100%;
+  background-color: var(--fill-clr);
+  padding: var(--typical-padding);
+  border: var(--fill-clr) solid 0.13rem;
+  outline: var(--fill-clr) solid 0.13rem;
+  border-radius: var(--sm-br);
+  font-size: var(--base-font-size);
+  transition: 0.2s ease-in-out;
+}
+button:hover {
+  border: var(--fill-clr) solid 0.13rem;
+  outline: var(--base-clr-transparent) solid 0.13rem;
+}
+button:focus-within {
+  border: var(--fill-clr) solid 0.13rem;
+  outline: var(--base-clr) solid 0.13rem;
+}
+button:active {
+  background-color: var(--fill-clr-transparent);
+  border: var(--fill-clr) solid 0.13rem;
+  outline: var(--base-clr) solid 0.13rem;
+}
+button:disabled {
+  background-color: var(--fill-clr-transparent);
+  color: var(--base-clr-transparent);
+  border: var(--fill-clr-transparent) solid 0.13rem;
+  outline: var(--base-clr-transparent) solid 0.13rem;
+}
+.btn-active {
+  background-color: var(--base-clr);
+  color: var(--fill-clr);
+  font-weight: bold;
+}
+.copied {
+  background-color: var(--base-clr);
+  color: var(--fill-clr);
+  cursor: default;
+  outline: var(--base-clr) solid 0.13rem;
+}
+.actions {
+  display: grid;
+  gap: var(--sm-gap);
+  grid-template-columns: 1.7fr 1fr;
+}
+#wordStatus {
+  font-size: 3.2rem;
+  margin: var(--sm-gap);
+  letter-spacing: 0.2rem;
+  max-width: 100%;
+  text-wrap: wrap;
+}
+#gmText {
+  display: grid;
+  min-height: 7rem;
+  text-align: center;
+  line-height: 1.5;
+}
+#restart {
+  aspect-ratio: 1 / 1;
+  grid-template-columns: auto;
+  justify-items: center;
+  flex-direction: column;
+}
+#heartsConteainer {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: -1rem;
+}
+.svg-container {
+  display: grid;
+  gap: var(--sm-gap);
+}
+.aftergame__row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--sm-gap);
+  margin: 2rem 0 0 2rem;
+}
+.aftergame__year {
+  text-align: center;
+  font-size: 1rem;
+  opacity: 0.6;
+  margin-top: 2rem;
+}
+.heart {
+  height: calc(var(--base-font-size) + 1rem);
+  min-width: calc(var(--base-font-size) + 1rem);
+}
+svg {
+  display: block;
+  max-width: 100%;
+  height: calc(var(--base-font-size));
+  min-width: calc(var(--base-font-size));
+  fill: currentColor;
+}
