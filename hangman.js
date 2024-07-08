@@ -5,9 +5,25 @@ const input = document.getElementById("input");
 const enterButton = document.getElementById("enter");
 const restartButton = document.getElementById("restart");
 const clueButton = document.getElementById("clue");
+const topic = document.getElementById("topic");
 
-let randomWord = hangmanWords[Math.floor(Math.random() * hangmanWords.length)];
-console.log("randomWord: " + randomWord);
+const topics = Object.keys(wordLists);
+
+// Select a random topic
+const randomTopicKey = topics[Math.floor(Math.random() * topics.length)];
+
+// Get the word list for the selected topic
+const randomTopic = wordLists[randomTopicKey];
+
+console.log("Random Topic Key:", randomTopicKey);
+console.log("Random Topic Words:", randomTopic);
+
+// Select a random word from the selected topic
+const randomWord = randomTopic[Math.floor(Math.random() * randomTopic.length)];
+
+console.log("Random Word:", randomWord);
+
+topic.innerText = `Current Topic: ${randomTopicKey.toUpperCase()}`;
 
 let remainingLetters = randomWord.length;
 let defaultAttempts = 6;
@@ -63,6 +79,7 @@ function checkGuess(guess) {
     updateGmText("There is no such letter.");
     wrongAnswers.push(guess.toLowerCase());
     remainingAttempts--;
+    heartsRendering();
   } else if (
     randomWordArray.indexOf(guess.toLowerCase()) === -1 &&
     wrongAnswers.indexOf(guess.toLowerCase()) !== -1
@@ -77,18 +94,17 @@ function checkGuess(guess) {
     updateGmText(`Nice! There is letter "${guess.toUpperCase()}"`);
     for (let j = 0; j < randomWord.length; j++) {
       if (randomWord[j] === guess.toLowerCase()) {
-        riddledWordArray[j] = guess.toLowerCase();
+        riddledWordArray[j] = guess.toUpperCase();
         remainingLetters--;
       }
     }
   }
   updateWordStatus();
-  heartsRendering();
 
   if (remainingLetters === 0) {
     updateGmText("Congratulations! You guessed the word!");
     input.disabled = true;
-    input.placeholder = `Nice round`;
+    input.placeholder = `Well played`;
     enterButton.disabled = true;
     clueButton.disabled = true;
   } else if (remainingAttempts === 0) {
@@ -96,15 +112,16 @@ function checkGuess(guess) {
       `Sorry, you've run out of attempts. The word was ${randomWord.toUpperCase()}.`
     );
     input.disabled = true;
-    input.placeholder = `Nice round`;
+    input.placeholder = `Try again`;
     enterButton.disabled = true;
     clueButton.disabled = true;
   }
 }
 
 let numberOfClues = 0;
+let defaultMAxNumberOFClues = 1;
 clueButton.onclick = function () {
-  if (numberOfClues < 1) {
+  if (numberOfClues < defaultMAxNumberOFClues) {
     let randomNumberOfLetter;
     let randomLetter;
 
@@ -129,7 +146,7 @@ document.addEventListener("keydown", function (event) {
   if (event.key === "Shift") {
     clueButton.onclick();
   }
-  if (event.key === "Space") {
+  if (event.key === "Control") {
     restartButton.onclick();
   }
 });
@@ -141,7 +158,7 @@ function filledHeart() {
           width="1em"
           height="1em"
           viewBox="0 0 24 24"
-          class="heart"
+          class="filled__heart"
         >
           <rect width="24" height="24" fill="none" />
           <path
@@ -158,7 +175,7 @@ function emptyHeart() {
           width="1em"
           height="1em"
           viewBox="0 0 24 24"
-          class="heart"
+          class="empty__heart"
         >
           <rect width="24" height="24" fill="none" />
           <path

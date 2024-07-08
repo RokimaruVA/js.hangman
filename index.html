@@ -45,6 +45,7 @@
     />
 
     <script src="baseOfWords.js" defer></script>
+    <script src="wordList.js" defer></script>
     <script src="hangman.js" defer></script>
     <link rel="stylesheet" href="00_reset.css" />
     <link rel="stylesheet" href="style.css" />
@@ -65,8 +66,8 @@
         </svg>
         <h1>HANGMAN</h1>
       </div>
-      <p>Remaining attempts</p>
       <div id="heartsConteainer"></div>
+      <p id="topic"></p>
       <p id="wordStatus"></p>
       <p id="gmText"></p>
 
@@ -103,7 +104,7 @@
         </button>
       </div>
       <div class="help">
-        SHIFT for a Clue | SPACE - restart | ENTER to enter an answer
+        ENTER to enter an answer | SHIFT for a Clue | CTRL for restart
       </div>
       <div class="aftergame__row">
         <button id="restart">

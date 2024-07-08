@@ -163,6 +163,9 @@ button:disabled {
   opacity: 0.6;
   margin-top: -1rem;
 }
+#topic {
+  margin-bottom: -2rem;
+}
 #wordStatus {
   font-size: 3.2rem;
   margin: var(--sm-gap);
@@ -186,7 +189,6 @@ button:disabled {
   display: flex;
   justify-content: center;
   gap: 1rem;
-  margin-top: -1rem;
 }
 .svg-container {
   display: grid;
@@ -204,9 +206,25 @@ button:disabled {
   opacity: 0.6;
   margin-top: 2rem;
 }
-.heart {
+.filled__heart,
+.empty__heart {
   height: calc(var(--base-font-size) + 1rem);
   min-width: calc(var(--base-font-size) + 1rem);
+}
+.empty__heart {
+  animation: brokenHeart 0.3s ease;
+}
+
+@keyframes brokenHeart {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 svg {
   display: block;
