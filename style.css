@@ -3,7 +3,7 @@
 :root {
   --sm-br: 0.5rem;
   --md-br: 1rem;
-  --sm-gap: 0.5rem;
+  --sm-gap: 0.4rem;
   --md-gap: 1.5rem;
   --typical-padding: 0.75rem 1rem;
   --base-clr: hsl(0, 0%, 100%);
@@ -168,14 +168,17 @@ button:disabled {
 }
 #wordStatus {
   font-size: 3.2rem;
-  margin: var(--sm-gap);
   letter-spacing: 0.2rem;
-  max-width: 100%;
-  text-wrap: wrap;
 }
-#gmText {
-  display: grid;
+
+.gm-text_container {
   min-height: 7rem;
+  margin-top: -1rem;
+  display: grid;
+  align-items: center;
+}
+
+#gmText {
   text-align: center;
   line-height: 1.5;
 }
@@ -204,7 +207,7 @@ button:disabled {
   text-align: center;
   font-size: 1rem;
   opacity: 0.6;
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 .filled__heart,
 .empty__heart {

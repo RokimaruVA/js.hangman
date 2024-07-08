@@ -15,9 +15,6 @@ const randomTopicKey = topics[Math.floor(Math.random() * topics.length)];
 // Get the word list for the selected topic
 const randomTopic = wordLists[randomTopicKey];
 
-console.log("Random Topic Key:", randomTopicKey);
-console.log("Random Topic Words:", randomTopic);
-
 // Select a random word from the selected topic
 const randomWord = randomTopic[Math.floor(Math.random() * randomTopic.length)];
 
@@ -71,51 +68,58 @@ restartButton.onclick = function () {
 };
 
 function checkGuess(guess) {
-  if (
-    randomWordArray.indexOf(guess.toLowerCase()) === -1 &&
-    wrongAnswers.indexOf(guess.toLowerCase()) === -1
-  ) {
-    // New incorrect guess
-    updateGmText("There is no such letter.");
-    wrongAnswers.push(guess.toLowerCase());
-    remainingAttempts--;
-    heartsRendering();
-  } else if (
-    randomWordArray.indexOf(guess.toLowerCase()) === -1 &&
-    wrongAnswers.indexOf(guess.toLowerCase()) !== -1
-  ) {
-    // Old incorrect guess
-    updateGmText("Sorry, but we already tried this letter.");
-  } else if (riddledWordArray.indexOf(guess) !== -1) {
-    // Letter already guessed correctly
-    updateGmText(`We already got letter "${guess.toUpperCase()}".`);
+  guess = guess.toLowerCase(); // Убедитесь, что буква в нижнем регистре
+  let correctGuess = false;
+
+  if (randomWordArray.indexOf(guess) === -1) {
+    // Новый неправильный ответ
+    if (wrongAnswers.indexOf(guess) === -1) {
+      updateGmText("There is no such letter.");
+      wrongAnswers.push(guess);
+      remainingAttempts--;
+      heartsRendering();
+      updateWordStatus();
+    } else {
+      // Старый неправильный ответ
+      updateGmText("Sorry, but we already tried this letter.");
+    }
   } else {
-    // Correct guess, update the riddledWordArray
+    // Правильный ответ
     updateGmText(`Nice! There is letter "${guess.toUpperCase()}"`);
     for (let j = 0; j < randomWord.length; j++) {
-      if (randomWord[j] === guess.toLowerCase()) {
+      if (randomWord[j] === guess && riddledWordArray[j] === "_") {
         riddledWordArray[j] = guess.toUpperCase();
         remainingLetters--;
+        correctGuess = true;
       }
     }
+
+    if (!correctGuess) {
+      updateGmText(`We already got letter "${guess.toUpperCase()}".`);
+    }
   }
+
   updateWordStatus();
 
-  if (remainingLetters === 0) {
+  if (remainingLetters <= 0) {
     updateGmText("Congratulations! You guessed the word!");
     input.disabled = true;
     input.placeholder = `Well played`;
     enterButton.disabled = true;
     clueButton.disabled = true;
-  } else if (remainingAttempts === 0) {
+  } else if (remainingAttempts <= 0) {
     updateGmText(
       `Sorry, you've run out of attempts. The word was ${randomWord.toUpperCase()}.`
     );
-    input.disabled = true;
     input.placeholder = `Try again`;
+    input.disabled = true;
     enterButton.disabled = true;
     clueButton.disabled = true;
   }
+
+  console.log("remainingLetters = " + remainingLetters);
+  console.log("remainingAttempts = " + remainingAttempts);
+  console.log("numberOfClues = " + numberOfClues);
 }
 
 let numberOfClues = 0;
@@ -136,8 +140,6 @@ clueButton.onclick = function () {
     updateGmText("You can only use the clue once.");
   }
 };
-
-console.log(numberOfClues);
 
 document.addEventListener("keydown", function (event) {
   if (event.key === "Enter") {

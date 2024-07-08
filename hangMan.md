@@ -18,6 +18,5 @@
 5. "Play again" Button +++
 6. More icons for everything +++
 8. visual display of locked buttons after the end of the game +++
-1. Possibility to choose a topic
 7. Buy me a cofe
 9. Screen-keyboard
