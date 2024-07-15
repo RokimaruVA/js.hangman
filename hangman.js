@@ -1,4 +1,4 @@
-const hearts = document.getElementById("heartsConteainer");
+const hearts = document.getElementById("heartsContainer");
 const wordStatus = document.getElementById("wordStatus");
 const gmText = document.getElementById("gmText");
 const input = document.getElementById("input");
@@ -9,14 +9,22 @@ const topic = document.getElementById("topic");
 
 const topics = Object.keys(wordLists);
 
+// $(document).ready(function () {
+//   // Your jQuery code to fade in the h1 element
+//   $("body").hide(0).fadeIn(1000);
+// });
+
 // Select a random topic
-const randomTopicKey = topics[Math.floor(Math.random() * topics.length)];
+const randomTopicKey = randomizeByLength(topics);
+function randomizeByLength(ofWhatAndWhat) {
+  return ofWhatAndWhat[Math.floor(Math.random() * ofWhatAndWhat.length)];
+}
 
 // Get the word list for the selected topic
 const randomTopic = wordLists[randomTopicKey];
 
 // Select a random word from the selected topic
-const randomWord = randomTopic[Math.floor(Math.random() * randomTopic.length)];
+const randomWord = randomizeByLength(randomTopic);
 
 console.log("Random Word:", randomWord);
 
@@ -44,8 +52,35 @@ function updateGmText(text) {
   gmText.innerHTML = text;
 }
 
+const canvasHangman = document.getElementById("hangman");
+
+// Установите размер канвы
+const canvasSizeHangman = Math.min(
+  canvasHangman.clientWidth,
+  canvasHangman.clientHeight
+);
+
+// Получите плотность пикселей устройства
+const hangmanScale = window.devicePixelRatio;
+
+// Установите размеры канвы с учётом плотности пикселей
+canvasHangman.width = canvasSizeHangman * hangmanScale;
+canvasHangman.height = canvasSizeHangman * hangmanScale;
+
+// Установите стиль канвы
+canvasHangman.style.width = "3rem";
+canvasHangman.style.height = "3rem";
+
+let ctxHangman = canvasHangman.getContext("2d");
+
+// Масштабирование контекста рисования для виртуальной координатной системы 0-24
+ctxHangman.scale(canvasHangman.width / 24, canvasHangman.height / 24);
+
+ctxHangman.fillStyle = "white";
+
 input.focus();
 heartsRendering();
+drawHuman();
 updateWordStatus();
 updateGmText(
   `Guess the word before you run out of attempts. Here is only one clue.` +
@@ -74,14 +109,17 @@ function checkGuess(guess) {
   if (randomWordArray.indexOf(guess) === -1) {
     // Новый неправильный ответ
     if (wrongAnswers.indexOf(guess) === -1) {
-      updateGmText("There is no such letter.");
+      updateGmText(`There is no letter ${guess.toUpperCase()}.`);
       wrongAnswers.push(guess);
       remainingAttempts--;
       heartsRendering();
+      drawHuman();
       updateWordStatus();
     } else {
       // Старый неправильный ответ
-      updateGmText("Sorry, but we already tried this letter.");
+      updateGmText(
+        `Sorry, but we already tried letter ${guess.toUpperCase()}.`
+      );
     }
   } else {
     // Правильный ответ
@@ -195,4 +233,67 @@ function heartsRendering() {
   for (i = remainingAttempts + 1; i <= defaultAttempts; i++) {
     hearts.insertAdjacentHTML("beforeend", emptyHeart());
   }
+}
+
+function drawHuman() {
+  ctxHangman.clearRect(0, 0, canvasHangman.width, canvasHangman.height);
+  if (remainingAttempts === defaultAttempts) {
+    drawHead();
+    drawTorso();
+    drawLeftHand();
+    drawRightHand();
+    drawLeftLeg();
+    drawRightLeg();
+  } else if (remainingAttempts === defaultAttempts - 1) {
+    drawHead();
+    drawTorso();
+    drawLeftHand();
+    drawRightHand();
+    drawLeftLeg();
+  } else if (remainingAttempts === defaultAttempts - 2) {
+    drawHead();
+    drawTorso();
+    drawLeftHand();
+    drawRightHand();
+  } else if (remainingAttempts === defaultAttempts - 3) {
+    drawHead();
+    drawTorso();
+    drawLeftHand();
+  } else if (remainingAttempts === defaultAttempts - 4) {
+    drawHead();
+    drawLeftHand();
+  } else if (remainingAttempts === defaultAttempts - 5) {
+    drawHead();
+  } else if (remainingAttempts <= defaultAttempts - 6) {
+    drawHead();
+    drawTorso();
+    drawLeftHand();
+    drawRightHand();
+    drawLeftLeg();
+    drawRightLeg();
+  }
+}
+function drawHead() {
+  ctxHangman.fillRect(11, 2, 3, 3);
+}
+function drawTorso() {
+  ctxHangman.fillRect(10, 6, 5, 8);
+}
+function drawLeftHand() {
+  for (i = 0; i < 3; i += 1) {
+    ctxHangman.fillRect((4 + i * 2) * 1, (2 + i * 2) * 1, 2, 2);
+  }
+}
+function drawRightHand() {
+  for (i = 0; i < 3; i += 1) {
+    ctxHangman.fillRect((19 + i * -2) * 1, (2 + i * 2) * 1, 2, 2);
+  }
+}
+
+function drawLeftLeg() {
+  ctxHangman.fillRect(10, 14, 2, 6);
+}
+
+function drawRightLeg() {
+  ctxHangman.fillRect(13, 14, 2, 6);
 }

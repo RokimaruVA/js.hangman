@@ -43,7 +43,12 @@
       href="pixelarticons--human-handsup.svg"
       type="image/x-icon"
     />
-
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+      defer
+    ></script>
     <script src="baseOfWords.js" defer></script>
     <script src="wordList.js" defer></script>
     <script src="hangman.js" defer></script>
@@ -53,7 +58,7 @@
   <body>
     <div class="container">
       <div class="hangman-block">
-        <svg
+        <!-- <svg
           class="hangman"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -63,10 +68,11 @@
             fill="currentColor"
             d="M10 2h4v4h-4zM7 7h10v2h-2v13h-2v-6h-2v6H9V9H7zM5 5v2h2V5zm0 0H3V3h2zm14 0v2h-2V5zm0 0V3h2v2z"
           />
-        </svg>
+        </svg> -->
+        <canvas id="hangman"></canvas>
         <h1>HANGMAN</h1>
       </div>
-      <div id="heartsConteainer"></div>
+      <div id="heartsContainer"></div>
       <p id="topic"></p>
       <p id="wordStatus"></p>
       <div class="gm-text_container">

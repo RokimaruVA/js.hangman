@@ -58,6 +58,7 @@ main {
 .hangman-block {
   display: flex;
   gap: var(--sm-gap);
+  align-items: center;
 }
 .hangman {
   display: block;
@@ -188,7 +189,7 @@ button:disabled {
   justify-items: center;
   flex-direction: column;
 }
-#heartsConteainer {
+#heartsContainer {
   display: flex;
   justify-content: center;
   gap: 1rem;
@@ -235,4 +236,8 @@ svg {
   height: calc(var(--base-font-size));
   min-width: calc(var(--base-font-size));
   fill: currentColor;
+}
+.canvas {
+  height: var(--h1-font-size);
+  /* aspect-ratio: 1 / 1; */
 }
