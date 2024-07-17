@@ -9,11 +9,6 @@ const topic = document.getElementById("topic");
 
 const topics = Object.keys(wordLists);
 
-// $(document).ready(function () {
-//   // Your jQuery code to fade in the h1 element
-//   $("body").hide(0).fadeIn(1000);
-// });
-
 // Select a random topic
 const randomTopicKey = randomizeByLength(topics);
 function randomizeByLength(ofWhatAndWhat) {
@@ -141,6 +136,7 @@ function checkGuess(guess) {
 
   if (remainingLetters <= 0) {
     updateGmText("Congratulations! You guessed the word!");
+    drawHuman();
     input.disabled = true;
     input.placeholder = `Well played`;
     enterButton.disabled = true;
@@ -149,6 +145,7 @@ function checkGuess(guess) {
     updateGmText(
       `Sorry, you've run out of attempts. The word was ${randomWord.toUpperCase()}.`
     );
+    drawHuman();
     input.placeholder = `Try again`;
     input.disabled = true;
     enterButton.disabled = true;
